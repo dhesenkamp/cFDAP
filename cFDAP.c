@@ -53,7 +53,7 @@ struct data {
 };
 
 /* FUNCTION DECLARATIONS */
-/* Functions with the '_x', '_kon' or '_koff' indeces are
+/* Functions with the '_x', '_kon' or '_koff' indices are
  * derivatives of those functions with respect to '_x',
  * '_kon' and '_koff', respectively */
 double complex fullModel(double complex s, double kon,
@@ -159,7 +159,7 @@ hybridModel_koff(double complex s, double kon, double koff, double Df, double R)
    Default values:     omega = 200, n_int = 10000
    
    Sigma is a real number which must be a little bit bigger than
-   the real part of the rigthmost pole of the function F(s).
+   the real part of the rightmost pole of the function F(s).
    For example, if the rightmost pole is s = 2.0, then sigma could
    be equal to 2.05. This is done to keep all poles at the left of
    the integration area on the complex plane.
@@ -442,14 +442,14 @@ model_fdf(const gsl_vector * x, void *data,
 void
 print_state (size_t iter, gsl_multifit_fdfsolver * s, size_t p) {
     if (p == 1) {
-        printf ("iter: %3u xx = % 15.8f "
+        printf ("iter: %3zu xx = % 15.8f "
                 "|f(x)| = %g\n",
                 iter,
                 gsl_vector_get (s->x, 0),
                 gsl_blas_dnrm2 (s->f));
     }
     else if (p == 2) {
-        printf ("iter: %3u x = % 15.8f % 15.8f "
+        printf ("iter: %3zu x = % 15.8f % 15.8f "
                 "|f(x)| = %g\n",
                 iter,
                 gsl_vector_get (s->x, 0),
@@ -482,7 +482,7 @@ bad_input(void) {
     fprintf(stderr, "                          IMPORTANT: use this parameter only with effectiveDiffusion\n");
     fprintf(stderr, "  initial_kon:            starting value for kon (default: 0.5)\n");
     fprintf(stderr, "  initial_koff:           starting value for koff (default: 0.5)\n");
-    fprintf(stderr, "  weights:                whether to use weiths (0 - no, 1 - yes, default: no)\n");
+    fprintf(stderr, "  weights:                whether to use weigths (0 - no, 1 - yes, default: no)\n");
     fprintf(stderr, "  input:                  name of input curve file (mandatory)\n");
     fprintf(stderr, "  standard_error:         name of input SD file (mandatory if weights = yes)\n");
     fprintf(stderr, "  output:                 prefix name of output file (Example: -o tau441wt\n");
@@ -501,7 +501,7 @@ int
 main(int argc, char *argv[]) {
 
     int i, status;
-    unsigned int iter = 0;
+    size_t iter = 0;
     double chi, chi0;
 
     /* DEFAULTS */
@@ -663,7 +663,7 @@ main(int argc, char *argv[]) {
             n = atoi(argv[i + 1]);
             i++;
             if(n < 3) {
-                fprintf(stderr, "ERROR: Your curve contatins less than 3 points? Are you kidding?\n\n");
+                fprintf(stderr, "ERROR: Your curve contains less than 3 points? Are you kidding?\n\n");
                 exit(1);
             }
         }
@@ -827,7 +827,7 @@ main(int argc, char *argv[]) {
     }
     while (status == GSL_CONTINUE && iter < 500);
 
-    /* Computing the Jacobian and covariace matrix */
+    /* Computing the Jacobian and covariance matrix */
     gsl_multifit_fdfsolver_jac(s, J);
     gsl_multifit_covar (J, 0.0, covar);
 
